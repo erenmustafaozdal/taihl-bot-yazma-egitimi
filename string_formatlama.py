@@ -27,9 +27,15 @@ ders = "Bot Yazma Eğitimi"
 
 
 # 3. Bütün yazıyı tersten yazalım
-print(ders[::-1])
-print(ders[::2])
-print(ders[::-2])
+# print(ders[::-1])
+# print(ders[::2])
+# print(ders[::-2])
+
+# 4. Bot kelimesini 5 defa yazalım
+print("-"*50)
+print(ders[0:3]*5)
+print((ders[0:3]+"\n")*5)
+print("-"*50)
 
 
 
