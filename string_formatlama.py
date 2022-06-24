@@ -12,5 +12,24 @@ yas = "36"
 # print("Adınız: {x}, Soyadınız: {y}, Yaşınız: {z}".format(x=ad, y=soyad, z=yas))
 
 # f string ile formatlama
-print(f"Adınız: {ad}, Soyadınız: {soyad}, Yaşınız: {yas}")
+# print(f"Adınız: {ad}, Soyadınız: {soyad}, Yaşınız: {yas}")
+
+# UYGULAMA
+ders = "Bot Yazma Eğitimi"
+
+# 1. Bot kelimesini ekrana yazalım
+# print(ders[0:3])
+
+# 2. Eğitim kelimesini ekrana yazalım
+# print(ders[10:])
+# print(ders[10:-1])
+# print(ders[10:16])
+
+
+# 3. Bütün yazıyı tersten yazalım
+print(ders[::-1])
+print(ders[::2])
+print(ders[::-2])
+
+
 
