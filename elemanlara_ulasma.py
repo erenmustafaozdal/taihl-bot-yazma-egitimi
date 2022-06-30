@@ -41,9 +41,33 @@ tarayici.find_element(By.ID, "sp-cc-accept").click()
 # tarayici.find_element(By.LINK_TEXT, "Çok Satanlar").click()
 
 # kısmi bağlantı metni ile elemana ulaşma
-tarayici.find_element(By.PARTIAL_LINK_TEXT, "Ürünlerinizin Reklamını").click()
+# tarayici.find_element(By.PARTIAL_LINK_TEXT, "Ürünlerinizin Reklamını").click()
 
 # etiket adı ile elemana ulaşma
+links = tarayici.find_elements(By.TAG_NAME, "a")
+print("Link sayısı:", len(links))
+# Sayfa her yüklendiğinde elemanlar yeniden oluştuğu için sıradaki linklere tıklayamayız
+# for link in links:
+#     try:
+#         link.click()
+#         sleep(2)
+#         tarayici.back()
+#         sleep(2)
+#     except:
+#         pass
+
+for i in range(len(links)):
+    links = tarayici.find_elements(By.TAG_NAME, "a")
+    try:
+        links[i].click()
+        sleep(2)
+        tarayici.back()
+        sleep(2)
+    except:
+        pass
+
+imgs = tarayici.find_elements(By.TAG_NAME, "img")
+print("Resim sayısı:", len(imgs))
 
 # css seçici ile elemana ulaşma
 
