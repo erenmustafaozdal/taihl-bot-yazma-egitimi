@@ -38,9 +38,10 @@ tarayici.find_element(By.ID, "sp-cc-accept").click()
 # arama_kutusu.send_keys("Kulaklık")
 
 # bağlantı metni ile elemana ulaşma
-tarayici.find_element(By.LINK_TEXT, "Çok Satanlar").click()
+# tarayici.find_element(By.LINK_TEXT, "Çok Satanlar").click()
 
 # kısmi bağlantı metni ile elemana ulaşma
+tarayici.find_element(By.PARTIAL_LINK_TEXT, "Ürünlerinizin Reklamını").click()
 
 # etiket adı ile elemana ulaşma
 
