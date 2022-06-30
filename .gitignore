@@ -2,3 +2,6 @@
 temel-seviye-python/log.txt
 geckodriver.log
 resimler/*
+settings.py
+excel/*
+__pycache__
