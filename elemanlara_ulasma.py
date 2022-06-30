@@ -34,10 +34,11 @@ tarayici.find_element(By.ID, "sp-cc-accept").click()
 # arama_kutulari[1].click()
 
 # name özniteliği ile elemana ulaşma
-arama_kutusu = tarayici.find_element(By.NAME, "field-keywords")
-arama_kutusu.send_keys("Kulaklık")
+# arama_kutusu = tarayici.find_element(By.NAME, "field-keywords")
+# arama_kutusu.send_keys("Kulaklık")
 
 # bağlantı metni ile elemana ulaşma
+tarayici.find_element(By.LINK_TEXT, "Çok Satanlar").click()
 
 # kısmi bağlantı metni ile elemana ulaşma
 
