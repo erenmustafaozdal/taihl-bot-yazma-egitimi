@@ -4,10 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from time import sleep
-from settings import kullanici_adi, sifre
+from settings import kullanici_adi, sifre, driver
 import random
 
-driver = "C:\\Users\\erenMustafaOzdal\\.wdm\\drivers\\geckodriver\\win64\\v0.31.0\\geckodriver.exe"
+
 tarayici = webdriver.Firefox(executable_path=driver)
 tarayici.maximize_window()
 tarayici.get("https://twitter.com/i/flow/login")
@@ -52,18 +52,24 @@ while True:
 def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
     tweet = f"{tweet}\n#{etiket}"
 
-    # sayfa yüklendi mi
-    bekle.until(ec.visibility_of_element_located(
-        (By.XPATH, f"//a[@role='link' and @href='/{kullanici_adi}']")
-    ))
-
     # tweetle
-    tarayici.find_element(By.XPATH, "//div[@class='DraftEditor-root']").click()
-    editor = tarayici.find_element(By.XPATH, "//div[contains(@class,'public-DraftEditor-content')]")
-    editor.send_keys(tweet)
-    tarayici.find_element(By.XPATH, "//div[@class='css-1dbjc4n r-1p0dtai r-1d2f490 r-1xcajam r-zchlnj r-ipm5af']").click()
+    while True:
+        try:
+            # sayfa yüklendi mi
+            bekle.until(ec.visibility_of_element_located(
+                (By.XPATH, f"//a[@role='link' and @href='/{kullanici_adi}']")
+            ))
 
-    tarayici.find_element(By.XPATH, "//div[@data-testid='tweetButtonInline']").click()
+            tarayici.find_element(By.XPATH, "//div[@class='DraftEditor-root']").click()
+            editor = tarayici.find_element(By.XPATH, "//div[contains(@class,'public-DraftEditor-content')]")
+            editor.send_keys(tweet)
+            tarayici.find_element(By.XPATH, "//div[@class='css-1dbjc4n r-1p0dtai r-1d2f490 r-1xcajam r-zchlnj r-ipm5af']").click()
+
+            tarayici.find_element(By.XPATH, "//div[@data-testid='tweetButtonInline']").click()
+            break
+        except:
+            tarayici.refresh()
+            sleep(3)
 
     sleep(3)
 
