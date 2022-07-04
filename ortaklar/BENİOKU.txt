@@ -1,0 +1,3 @@
+ortaklar klasöründe kendi GitHub kullanıcı adınızla bir klasör oluşturup, tüm çalışmalarınızı kendi klasörünüz yapın.
+
+Yaptığınız değişiklikleri GitHub'a gönderin.
