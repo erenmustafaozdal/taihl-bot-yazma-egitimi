@@ -1,56 +1,24 @@
-from selenium import webdriver
-# from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from time import sleep
-from settings import kullanici_adi, sifre, driver
-import random
+from settings import kullanici_adi, sifre
+from modules.tarayici_core import tarayiciyi_al
+from modules.twitter_core import login
+import xlrd
+from tqdm import tqdm
 
-
-tarayici = webdriver.Firefox(executable_path=driver)
-tarayici.maximize_window()
-tarayici.get("https://twitter.com/i/flow/login")
-
+tarayici = tarayiciyi_al()
 bekle = WebDriverWait(tarayici, 30)
 kisa_bekle = WebDriverWait(tarayici, 3)
+tarayici.maximize_window()
 
 # giriş yap
-bekle.until(ec.visibility_of_element_located(
-    (By.NAME, "text")
-)).send_keys(kullanici_adi)
-tarayici.find_element(By.XPATH, "//div[@role='button' and normalize-space()='İleri']").click()
-bekle.until(ec.visibility_of_element_located(
-    (By.NAME, "password")
-)).send_keys(sifre)
-tarayici.find_element(By.XPATH, "//div[@data-testid='LoginForm_Login_Button']").click()
-
-# Kod alanı geldi mi?
-try:
-    eleman = kisa_bekle.until(ec.visibility_of_element_located(
-        (By.XPATH, "//input[@data-testid='ocfEnterTextTextInput']")
-    ))
-    tarayici.minimize_window()
-    kod = input("Kodu Yazın: ")
-    tarayici.maximize_window()
-    eleman.send_keys(kod)
-    tarayici.find_element(By.XPATH, "//div[@role='button' and normalize-space()='İleri']").click()
-except:
-    pass
-
-# hata sayfası mı geldi
-while True:
-    try:
-        kisa_bekle.until(ec.visibility_of_element_located(
-            (By.XPATH, "//span[text()='Hata']")
-        ))
-        tarayici.find_element(By.XPATH, "//div[@role='button' and normalize-space()='Yenile']").click()
-    except:
-        break
+login(tarayici, bekle, kisa_bekle, kullanici_adi, sifre)
 
 
 def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
-    tweet = f"{tweet}\n#{etiket}"
+    tweet = f"{tweet} #{etiket}"
 
     # tweetle
     while True:
@@ -89,40 +57,23 @@ def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
             (By.XPATH, '//div[@role="menuitem" and normalize-space()="Retweet"]')
         )).click()
 
+# Excel'den tweetleri çekip paylaş
+wb = xlrd.open_workbook("Tweet_Listesi.xlsx")
+ws = wb.sheet_by_index(0)
+satir_sayisi = ws.nrows
 
-tweets = [
-    "Adımız duyualacak!",
-    "Bot yazıyoruz!",
-    "Bot yazarak tarayıcımızda otomatik işlemler yapıyoruz. Bu tweet gibi 😎!",
-    "Selim Hoca kraldır.",
-    "Bir sabah gelecek kardan aydınlık",
-    "Menemen soğansız olmaz.",
-    "\"Baban da mı botçuydu!\"",
-    "Toprağım sıkıntı yok.",
-    "Herkes bilecek.",
-    "Menemen yumurtasız da olmaz",
-    "biz bot yazdık la",
-    "Ağzını kırarım bebe!",
-    "Ömer zafer müdür yardımcısı olsun",
-    "\"Ya ben İstanbulu alacağım yada o beni\"",
-    "Bu gün hashtag biziz",
-    "Aynen kardeşim Aras kargo",
-    "Toroslar şehirde",
-    "ilim akılla iman irade ile olur",
-    "İhanetin nedeni olmaz, bedeli olur",
-    "Sadece ölüler görür",
-]
-
-tweet_sayisi = 10
-
-for i in range(tweet_sayisi):
+for i in range(satir_sayisi):
     tarayici.get("https://twitter.com/home")
 
-    t = random.choice(tweets)
+    t = ws.cell_value(i, 0)
     tweetle(t)
+    print(f"{i+1}. TWEET ATILDI: {t}")
 
     # bir dakika bekle
-    sleep(10)
+    for i in tqdm(range(60)):
+        sleep(1)
+
+    print("-"*50)
 
 
 sleep(3)
