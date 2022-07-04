@@ -31,7 +31,8 @@ def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
             tarayici.find_element(By.XPATH, "//div[@class='DraftEditor-root']").click()
             editor = tarayici.find_element(By.XPATH, "//div[contains(@class,'public-DraftEditor-content')]")
             editor.send_keys(tweet)
-            tarayici.find_element(By.XPATH, "//div[@class='css-1dbjc4n r-1p0dtai r-1d2f490 r-1xcajam r-zchlnj r-ipm5af']").click()
+            eleman = tarayici.find_element(By.XPATH, "//div[@class='css-1dbjc4n r-1p0dtai r-1d2f490 r-1xcajam r-zchlnj r-ipm5af']")
+            tarayici.execute_script("arguments[0].click();", eleman)
 
             tarayici.find_element(By.XPATH, "//div[@data-testid='tweetButtonInline']").click()
             break
@@ -42,7 +43,7 @@ def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
     sleep(3)
 
     # etiket sayfasına git
-    tarayici.get(f"https://twitter.com/hashtag/{etiket}?src=hashtag_click")
+    tarayici.get(f"https://twitter.com/hashtag/{etiket}?src=hashtag_click&f=live")
 
     try:
         retweets = kisa_bekle.until(ec.visibility_of_all_elements_located(
@@ -70,7 +71,7 @@ for i in range(satir_sayisi):
     print(f"{i+1}. TWEET ATILDI: {t}")
 
     # bir dakika bekle
-    for i in tqdm(range(60)):
+    for i in tqdm(range(15)):
         sleep(1)
 
     print("-"*50)
