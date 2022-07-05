@@ -2,11 +2,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from time import sleep
-from settings import kullanici_adi, sifre
+from settings import kullanici_adi, sifre, etiket_oncesi
 from modules.tarayici_core import tarayiciyi_al
 from modules.twitter_core import login
 import xlrd
 from tqdm import tqdm
+
+gunun_etiketleri = "SurvivorKupası GeriAlınsın #salı Ümraniye #Tozluyaka"
 
 tarayici = tarayiciyi_al()
 bekle = WebDriverWait(tarayici, 30)
@@ -17,8 +19,8 @@ tarayici.maximize_window()
 login(tarayici, bekle, kisa_bekle, kullanici_adi, sifre)
 
 
-def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
-    tweet = f"{tweet} #{etiket}"
+def tweetle(tweet, etiket="TeknolojiAihl"):
+    tweet = f"{tweet}{etiket_oncesi}#{etiket} {gunun_etiketleri}"
 
     # tweetle
     while True:
@@ -59,7 +61,7 @@ def tweetle(tweet, etiket="SancaktepeTeknolojiAihl"):
         )).click()
 
 # Excel'den tweetleri çekip paylaş
-wb = xlrd.open_workbook("Tweet_Listesi.xlsx")
+wb = xlrd.open_workbook("Tweet_Listesi.xls")
 ws = wb.sheet_by_index(0)
 satir_sayisi = ws.nrows
 
@@ -71,7 +73,7 @@ for i in range(satir_sayisi):
     print(f"{i+1}. TWEET ATILDI: {t}")
 
     # bir dakika bekle
-    for i in tqdm(range(15)):
+    for i in tqdm(range(60)):
         sleep(1)
 
     print("-"*50)
