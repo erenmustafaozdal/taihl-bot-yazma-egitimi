@@ -12,7 +12,7 @@ from datetime import datetime
 aranacak_urun = input("Ne aramak istersiniz?: ")
 
 # excel dosyası oluşturulur veya açılır
-excel_path = "excel/amazon_urunleri.xlsx"
+excel_path = "../excel/amazon_urunleri.xlsx"
 if os.path.exists(excel_path):
     wb = load_workbook(excel_path)
     # aktif çalışma sayfası açılır
