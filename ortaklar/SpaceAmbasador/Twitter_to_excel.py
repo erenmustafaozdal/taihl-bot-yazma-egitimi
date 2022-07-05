@@ -38,9 +38,14 @@ bekle.until(ec.visibility_of_element_located(
 tarayici.find_element(By.XPATH, "//div[@data-testid='LoginForm_Login_Button']").click()
 
 # Enters the trends part.
-bekle.until(ec.visibility_of_element_located(
+# tarayici.get("https://twitter.com/i/trends")  # 1. yöntem
+# bekle.until(ec.visibility_of_element_located(
+#     (By.XPATH, "//a[@href='/i/trends']")
+# )).click()  # küçük ekranda hata verdi
+daha_fazla = bekle.until(ec.visibility_of_element_located(
     (By.XPATH, "//a[@href='/i/trends']")
-)).click()
+))
+tarayici.execute_script("arguments[0].click();", daha_fazla)
 sleep(2)
 
 # Prints trends to terminal and excel file.
