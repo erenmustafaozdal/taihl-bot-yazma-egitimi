@@ -1,6 +1,18 @@
 import time
 import os
 import glob
+from pdf2image import convert_from_path
+from settings import poppler_path
+
+
+def pdf2image(pdf_path):
+    images = convert_from_path(
+        pdf_path,
+        poppler_path=poppler_path
+    )
+    return images
+
+
 def download_wait():
     download_path = f"{os.path.expanduser('~')}/downloads"
     dl_wait = True
