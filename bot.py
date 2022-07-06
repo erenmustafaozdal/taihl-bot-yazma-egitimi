@@ -5,6 +5,20 @@ from modules.carrefoursa import resimleri_al as carrefoursa_resimler
 from modules.gratis import resimleri_al as gratis_resimler
 from modules.hakmar import resimleri_al as hakmar_resimler
 from modules.sok import resimleri_al as sok_resimler
+import os
+
+# Klasör yapısını oluşturalım
+klasorler = [
+    "resimler/a101",
+    "resimler/bim",
+    "resimler/careefoursa",
+    "resimler/gratis",
+    "resimler/hakmar",
+    "resimler/sok",
+]
+for klasor in klasorler:
+    if not os.path.exists(klasor):
+        os.makedirs(klasor)
 
 tarayici = tarayiciyi_al()
 
