@@ -6,6 +6,8 @@ from modules.gratis import resimleri_al as gratis_resimler
 from modules.hakmar import resimleri_al as hakmar_resimler
 from modules.sok import resimleri_al as sok_resimler
 import os
+from settings import bot_token, telegram_chat_id
+import telegram
 
 # Klasör yapısını oluşturalım
 klasorler = [
@@ -20,6 +22,8 @@ for klasor in klasorler:
     if not os.path.exists(klasor):
         os.makedirs(klasor)
 
+telegram_bot = telegram.Bot(token=bot_token)
+
 tarayici = tarayiciyi_al()
 
 a101 = a101_resimler(tarayici)
@@ -29,7 +33,20 @@ gratis = gratis_resimler(tarayici)
 hakmar = hakmar_resimler(tarayici)
 sok = sok_resimler(tarayici)
 
-liste = a101 + bim + carrefoursa + gratis + hakmar + sok
+kataloglar = {
+    "a101": a101,
+    "bim": bim,
+    "carrefoursa": carrefoursa,
+    "gratis": gratis,
+    "hakmar": hakmar,
+    "sok": sok,
+}
 
-for resim in liste:
-    print(resim)
+for market, resimler in kataloglar.items():
+    if not resimler:
+        continue
+
+    print(f"{market} marketinin kataloğu gönderiliyor.")
+    telegram_bot.send_message(telegram_chat_id, f"{market} marketinin gelecek hafta aktüel ürün kataloğu aşağıda")
+    for resim in resimler:
+        telegram_bot.send_photo(telegram_chat_id, open(resim, 'rb'))
