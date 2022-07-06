@@ -13,7 +13,7 @@ bim = bim_resimler(tarayici)
 carrefoursa = carrefoursa_resimler(tarayici)
 gratis = gratis_resimler(tarayici)
 hakmar = hakmar_resimler(tarayici)
-sok = hakmar_resimler(tarayici)
+sok = sok_resimler(tarayici)
 
 liste = a101 + bim + carrefoursa + gratis + hakmar + sok
 

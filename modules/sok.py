@@ -1,2 +1,5 @@
 def resimleri_al(tarayici):
-    pass
+    resim_yollari = []
+
+
+    return resim_yollari
